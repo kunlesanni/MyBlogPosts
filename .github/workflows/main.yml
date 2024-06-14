@@ -1,0 +1,37 @@
+name: publish to MyBlogs
+on:   
+  push:
+    paths:
+      - 'devto/**/**.md' # Path for community timeline
+      - 'devto/**/**/**.md' # Path for all posts (yearly)
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repo
+      uses: actions/checkout@v4.1.6
+
+    - name: Setup Node
+      uses: actions/setup-node@v4.0.2
+      with:
+        node-version: 14
+
+    - name: Install Dependencies
+      uses: bahmutov/npm-install@v1.10.2
+
+    - name: Run Prettier (Write)
+      run: yarn run prettier:write
+
+    - name: Run Embedme (Write)
+      run: yarn run embedme:write
+
+    - name: Publish articles on dev.to
+      continue-on-error: true
+      uses: sinedied/publish-devto@v2
+      with:
+        files: 'posts/**/*.md'
+        devto_key: ${{ secrets.DEVTO_TOKEN }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        conventional_commits: true

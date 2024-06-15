@@ -40,5 +40,7 @@ jobs:
       - name: Use the secret
         run: |
           echo "The secret is ${{ env.SECRET_VALUE }}"
+          echo "The secret is ${{ steps.getsecret.outputs.SECRET_VALUE }}"
+          echo "The key vault name is ${{ vars.KV_NAME }}"
 
             

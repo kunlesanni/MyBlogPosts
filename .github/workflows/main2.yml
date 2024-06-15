@@ -20,9 +20,15 @@ jobs:
         run: |
             az account show
 
-      - name: Azure PowerShell script
-        run: |
-            Get-AzContext
+      # - name: Azure PowerShell script
+      #   run: |
+      #       Get-AzContext
+
+      - name: Run Azure PowerShell Script File
+        uses: azure/powershell@v2
+        with:
+          inlineScript: Get-AzContext
+          azPSVersion: "latest"            
       
       - name: Get secret from Azure Key Vault
         id: getsecret

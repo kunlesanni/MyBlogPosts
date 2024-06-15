@@ -33,7 +33,7 @@ jobs:
       - name: Get secret from Azure Key Vault
         id: getsecret
         run: |
-          echo "SECRET_VALUE=$(az keyvault secret show -n test-secret --vault-name ${{ env.kv_name }} --query value -o tsv)" >> $GITHUB_ENV
+          echo "SECRET_VALUE=$(az keyvault secret show -n test-secret --vault-name ${{ env.KV_NAME }} --query value -o tsv)" >> $GITHUB_ENV
 
       - name: Use the secret
         run: |

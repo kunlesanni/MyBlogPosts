@@ -9,11 +9,9 @@ permissions:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    env:
-      KV_NAME: 'kv-f9m-dev'
     steps:
       - name: Azure login
-        uses: azure/login@v2
+        uses: azure/login@v2.1.0
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
           enable-AzPSSession: true
@@ -35,12 +33,11 @@ jobs:
       - name: Get secret from Azure Key Vault
         id: getsecret
         run: |
-          echo "SECRET_VALUE=$(az keyvault secret show -n test-secret --vault-name ${{ env.KV_NAME }} --query value -o tsv)" >> $GITHUB_ENV
+          echo "SECRET_VALUE=$(az keyvault secret show -n test-secret --vault-name ${{ vars.KV_NAME }} --query value -o tsv)" >> $GITHUB_ENV
 
-      - name: Use the secret
-        run: |
-          echo "The secret is ${{ env.SECRET_VALUE }}"
-          echo "The secret is ${{ steps.getsecret.outputs.SECRET_VALUE }}"
-          echo "The key vault name is ${{ vars.KV_NAME }}"
+      # - name: Use the secret
+      #   run: |
+      #     echo "The secret is ${{ env.SECRET_VALUE }}"
+      #     echo "The key vault name is ${{ vars.KV_NAME }}"
 
             

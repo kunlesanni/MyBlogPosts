@@ -2,6 +2,7 @@
 
 name: Run Azure Login with Service Principal
 on:
+  workflow_dispatch:
   push:
     paths:
       - '2024/**/**/**/**.md' # Path for posts

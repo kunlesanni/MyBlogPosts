@@ -1,13 +1,17 @@
 # File: .github/workflows/workflow.yml
 
 name: Run Azure Login with Service Principal
-on: [push]
+on:
+  push:
+    paths:
+      - '2024/**/**/**/**.md' # Path for posts
+      # - '2024/**/**/**.md' # Path for all posts (yearly)
 
 permissions:
   id-token: write
   contents: read
 jobs:
-  build-and-deploy:
+  ConnectToAzure:
     runs-on: ubuntu-latest
     steps:
       - name: Azure login
@@ -20,24 +24,39 @@ jobs:
         run: |
             az account show
 
-      # - name: Azure PowerShell script
-      #   run: |
-      #       Get-AzContext
-
-      - name: Run Azure PowerShell Script File
-        uses: azure/powershell@v2
-        with:
-          inlineScript: Get-AzContext
-          azPSVersion: "latest"            
+      # - name: Run Azure PowerShell Script/command
+      #   uses: azure/powershell@v2
+      #   with:
+      #     inlineScript: Get-AzContext # or from file, use this format: 'scriptPath: ./script.ps1'
+      #     azPSVersion: "latest"            
       
       - name: Get secret from Azure Key Vault
         id: getsecret
         run: |
-          echo "SECRET_VALUE=$(az keyvault secret show -n test-secret --vault-name ${{ vars.KV_NAME }} --query value -o tsv)" >> $GITHUB_ENV
-
-      # - name: Use the secret
-      #   run: |
-      #     echo "The secret is ${{ env.SECRET_VALUE }}"
-      #     echo "The key vault name is ${{ vars.KV_NAME }}"
-
-            
+          echo "DEVTO_PAT=$(az keyvault secret show -n ${{ vars.DEVTO_SECRET_NAME }} --vault-name ${{ vars.KV_NAME }} --query value -o tsv)" >> $GITHUB_ENV
+          
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node
+        uses: actions/setup-node@v4.0.2
+        with:
+          node-version: 14
+  
+      - name: Install Dependencies
+        uses: bahmutov/npm-install@v1.10.2
+  
+      - name: Run Prettier (Write)
+        run: yarn run prettier:write
+  
+      - name: Run Embedme (Write)
+        run: yarn run embedme:write
+  
+      - name: Publish articles on dev.to
+        continue-on-error: true
+        uses: sinedied/publish-devto@v2
+        with:
+          files: 'posts/**/*.md'
+          devto_key: ${{ env.DEVTO_PAT }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          conventional_commits: true

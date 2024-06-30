@@ -2,8 +2,8 @@ name: publish to MyBlogs
 on:   
   push:
     paths:
-      - 'devto/**/**.md' # Path for community timeline
-      - 'devto/**/**/**.md' # Path for all posts (yearly)
+      - 'devto/test/**/**.md' # Path for community timeline
+      - 'devto/test/**/**/**.md' # Path for all posts (yearly)
 
 jobs:
   publish:

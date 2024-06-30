@@ -1,6 +1,6 @@
 ---
 title: Simplifying Terraform State Management - The GUI way 💎
-published: false
+published: true
 description: A comprehensive guide on simplifying Terraform state management using Terraform Cloud. 
 tags: 'terraform, tfstate, TerraformCloud, azure, iac'
 cover_image: 'https://raw.githubusercontent.com/kunlesanni/MyBlogPosts/main/2024/june/TerraformStateWithTFC/images/tfdod.JPG'

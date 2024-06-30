@@ -57,8 +57,8 @@ jobs:
         continue-on-error: true
         uses: sinedied/publish-devto@v2
         with:
-          # files: 'posts/**/*.md'
-          files: '2024/**/**/**.md'
+          files: 'posts/**/*.md'
+          # files: '2024/**/**/**.md'
           devto_key: ${{ env.DEVTO_PAT }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
           conventional_commits: true

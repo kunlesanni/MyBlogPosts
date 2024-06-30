@@ -61,4 +61,4 @@ jobs:
           # files: '2024/**/**/**.md'
           devto_key: ${{ env.DEVTO_PAT }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          conventional_commits: true
+          # conventional_commits: true

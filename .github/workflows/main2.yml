@@ -1,6 +1,6 @@
 # File: .github/workflows/workflow.yml
 
-name: Run Azure Login with Service Principal
+name: Publish to Dev.to
 on:
   workflow_dispatch:
   push:

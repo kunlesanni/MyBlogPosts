@@ -15,7 +15,7 @@ jobs:
     - name: Read Article Content
       id: read_article
       run: |
-        content="$(cat articles/my-article.md)"
+        content="$(cat articles/test.md)"
         content="${content//'%'/'%25'}"
         content="${content//$'\n'/'%0A'}"
         content="${content//$'\r'/'%0D'}"

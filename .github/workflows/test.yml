@@ -1,5 +1,6 @@
 name: Post Article to Dev.to
 on:
+  workflow_dispatch:
   push:
     paths:
       - 'articles/**.md'  # Adjust this to your preferred path

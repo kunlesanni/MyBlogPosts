@@ -1,18 +1,18 @@
 # File: .github/workflows/workflow.yml
 
-name: Run Azure Login with Service Principal
+name: Publish to Dev.to
 on:
   workflow_dispatch:
   push:
     paths:
-      - '2024/**/**/**/**.md' # Path for posts
+      - '2024/**/**/**.md' # Path for posts
       # - '2024/**/**/**.md' # Path for all posts (yearly)
 
 permissions:
   id-token: write
   contents: read
 jobs:
-  ConnectToAzure:
+  PushToDevDotTo:
     runs-on: ubuntu-latest
     steps:
       - name: Azure login
@@ -57,7 +57,9 @@ jobs:
         continue-on-error: true
         uses: sinedied/publish-devto@v2
         with:
-          files: 'posts/**/*.md'
+          # files: 'posts/**/*.md'
+          # files: '2024/**/**/**.md'
+          files: '//.md'
           devto_key: ${{ env.DEVTO_PAT }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          conventional_commits: true
+          # conventional_commits: true

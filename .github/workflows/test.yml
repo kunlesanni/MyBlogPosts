@@ -1,0 +1,39 @@
+name: Post Article to Dev.to
+on:
+  push:
+    paths:
+      - 'articles/**.md'  # Adjust this to your preferred path
+
+jobs:
+  post_article:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Read Article Content
+      id: read_article
+      run: |
+        content="$(cat articles/my-article.md)"
+        content="${content//'%'/'%25'}"
+        content="${content//$'\n'/'%0A'}"
+        content="${content//$'\r'/'%0D'}"
+        echo "::set-output name=content::$content"
+
+    - name: Post to Dev.to
+      run: |
+        curl -X POST "https://dev.to/api/articles" \
+        -H "Content-Type: application/json" \
+        -H "api-key: ${{ secrets.DEVTO_TOKEN }}" \
+        -d '{
+          "article": {
+            "title": "Your Article Title4",
+            "body_markdown": "${{ steps.read_article.outputs.content }}",
+            "published": false,
+            "series": "Your Series",
+            "description": "Short description",
+            "tags": ["tag1", "tag2"],
+            "organization_id": 0
+          }
+        }'

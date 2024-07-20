@@ -25,7 +25,7 @@ jobs:
     - name: Set output
       id: set-output
       env:
-        READ_FILE: cat "articles/test.md"
+        READ_FILE: $(cat articles/test.md)
       run:  echo "FILE_CONTENT=$READ_FILE" >> $GITHUB_OUTPUT
       
     # - name: Set color

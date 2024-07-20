@@ -16,12 +16,18 @@ jobs:
     - name: Read Article Content
       id: read_article
       run: |
-        content="$(cat articles/test.md)"
+        content="$(echo articles/test.md)"
         content="${content//'%'/'%25'}"
         content="${content//$'\n'/'%0A'}"
         content="${content//$'\r'/'%0D'}"
-        echo "::set-output name=content::$content"
-      
+        echo "FILE_CONTENT=$content" >> "$GITHUB_ENV
+# run: |
+# content="$(cat articles/test.md)"
+# content="${content//'%'/'%25'}"
+# content="${content//$'\n'/'%0A'}"
+# content="${content//$'\r'/'%0D'}"
+# echo "::set-output name=content::$content"
+
     # - name: Set output
     #   id: set-output
     #   run: echo "FILE_CONTENT=$(cat articles/test.md)" >> "$GITHUB_ENV"
@@ -60,11 +66,11 @@ jobs:
       run: |
         curl -X POST "https://dev.to/api/articles" \
         -H "Content-Type: application/json" \
-        -H "api-key: ${{ secrets.DEVTo_TOKEN }}" \
+        -H "api-key: ${{ secrets.DEVTO_TOKEN }}" \
         -d '{
           "article": {
             "title": "Your Article Title",
-            "body_markdown": "${{ steps.read_article.outputs.content }}",
+            "body_markdown": "${{ steps.read_article.outputs.FILE_CONTENT }}",
             "published": false,
             "series": "Your Series",
             "main_image": "URL to the main image",

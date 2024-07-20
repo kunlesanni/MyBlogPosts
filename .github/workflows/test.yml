@@ -31,7 +31,7 @@ jobs:
         -d '{
           "article": {
             "title": "Your Article Title5",
-            "body_markdown": "Test5",
+            "body_markdown": "$content",
             "published": false,
             "series": "Your Series",
             "description": "Short description",

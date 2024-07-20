@@ -13,24 +13,25 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Read Article Content
-      id: read_article
-      run: |
-        content="$(cat articles/test.md)"
-        content="${content//'%'/'%25'}"
-        content="${content//$'\n'/'%0A'}"
-        content="${content//$'\r'/'%0D'}"
-        echo "::set-output name=content::$content"
+    # - name: Read Article Content
+    #   id: read_article
+      # run: |
+      #   content="$(cat articles/test.md)"
+      #   content="${content//'%'/'%25'}"
+      #   content="${content//$'\n'/'%0A'}"
+      #   content="${content//$'\r'/'%0D'}"
+      #   echo "::set-output name=content::$content"
 
     - name: Post to Dev.to
       run: |
+        content="$(cat articles/test.md)"
         curl -X POST "https://dev.to/api/articles" \
         -H "Content-Type: application/json" \
         -H "api-key: ${{ secrets.DEVTO_TOKEN }}" \
         -d '{
           "article": {
-            "title": "Your Article Title4",
-            "body_markdown": "${{ steps.read_article.outputs.content }}",
+            "title": "Your Article Title5",
+            "body_markdown": "'"$content"'",
             "published": false,
             "series": "Your Series",
             "description": "Short description",

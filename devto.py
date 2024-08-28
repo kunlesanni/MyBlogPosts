@@ -13,10 +13,10 @@ payload = json.dumps({
     "title": "Test Article3",
     "body_markdown": htmlmarkdown,
     "published": False,
-    "series": "string",
+    "series": "IaC Articles",
     "main_image": "https://github.com/kunlesanni/MyBlogPosts/blob/main/2024/June/TerraformStateWithTFC/images/tfdod.JPG?raw=true",
-    "description": "string",
-    "tags": "string",
+    "description": "Small talk about IaC best practices",
+    "tags": ["test", "python", "devto"],
     "organization_id": 0
   }
 })
